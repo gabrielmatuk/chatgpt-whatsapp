@@ -3,8 +3,11 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/gabrielmatuk/wppgpt/src/config"
 )
 
 type Message struct {
@@ -31,6 +34,10 @@ type Choice struct {
 		Role    string `json:"role"`
 		Content string `json:"content"`
 	} `json:"message"`
+}
+
+func init() {
+	config.LoadingEnv()
 }
 
 func GenerateGPTText(query string) (string, error) {
@@ -76,4 +83,8 @@ func GenerateGPTText(query string) (string, error) {
 		return "", err
 	}
 	return resp.Choices[0].Message.Content, nil
+}
+
+func main() {
+	fmt.Println("Key" + config.ApiKey)
 }
