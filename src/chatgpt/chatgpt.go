@@ -39,7 +39,7 @@ type Choice struct {
 	} `json:"message"`
 }
 
-func GenerateGPTText(query string) (string, error) {
+func generateGPTText(query string) (string, error) {
 	req := Request{
 		Model: "gpt-3.5-turbo",
 		Messages: []Message{
@@ -100,7 +100,7 @@ func parseBase64RequestData(r string) (string, error) {
 	return "", errors.New("body not found")
 }
 
-func process(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func Process(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	result, err := parseBase64RequestData(request.Body)
 	if err != nil {
 		return events.APIGatewayProxyResponse{
@@ -109,7 +109,7 @@ func process(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		}, nil
 	}
 
-	text, err := GenerateGPTText(result)
+	text, err := generateGPTText(result)
 	if err != nil {
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusInternalServerError,
