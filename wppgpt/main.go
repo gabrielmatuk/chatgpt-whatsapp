@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -64,4 +65,15 @@ func GenerateGPTText(query string) (string, error) {
 
 	defer response.Body.Close()
 
+	resBody, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return "", err
+	}
+
+	var resp Response
+	err = json.Unmarshal(resBody, &resp)
+	if err != nil {
+		return "", err
+	}
+	return resp.Choices[0].Message.Content, nil
 }
