@@ -25,3 +25,16 @@ type Choice struct {
 		Content string `json:"content"`
 	} `json:"message"`
 }
+
+func GenerateGPTText(query string) (string, error) {
+	req := Request{
+		Model: "gpt-3.5-turbo",
+		Messages: []Message{
+			{
+				Role:    "user",
+				Content: query,
+			},
+		},
+		MaxTokens: 150,
+	}
+}
