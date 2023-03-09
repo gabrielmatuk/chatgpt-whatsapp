@@ -43,6 +43,7 @@ type Choice struct {
 
 func init() {
 	config.LoadingEnv()
+	fmt.Println("Loading ENV variables.")
 }
 
 func GenerateGPTText(query string) (string, error) {
@@ -68,7 +69,7 @@ func GenerateGPTText(query string) (string, error) {
 	}
 
 	request.Header.Set("Content-Type", "application/json")
-	request.Header.Set("Authorization", "Bearer API_KEY")
+	request.Header.Set("Authorization", "Bearer "+config.ApiKey)
 
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
@@ -130,5 +131,5 @@ func process(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 func main() {
 	lambda.Start(process)
-	fmt.Println("Key" + config.ApiKey)
+	fmt.Println("Message send!")
 }

@@ -1,10 +1,7 @@
 package config
 
 import (
-	"log"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 var (
@@ -13,11 +10,5 @@ var (
 )
 
 func LoadingEnv() {
-	var err error
-
-	if err = godotenv.Load(); err != nil {
-		log.Fatal(err)
-	}
-
 	ApiKey = os.Getenv("API_TOKEN_GPT")
 }
