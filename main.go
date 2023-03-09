@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/gabrielmatuk/wppgpt/src/config"
 )
 
@@ -83,6 +84,10 @@ func GenerateGPTText(query string) (string, error) {
 		return "", err
 	}
 	return resp.Choices[0].Message.Content, nil
+}
+
+func process(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+
 }
 
 func main() {
