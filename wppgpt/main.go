@@ -1,5 +1,11 @@
 package main
 
+import (
+	"bytes"
+	"encoding/json"
+	"net/http"
+)
+
 type Message struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
@@ -37,4 +43,17 @@ func GenerateGPTText(query string) (string, error) {
 		},
 		MaxTokens: 150,
 	}
+
+	reqJson, err := json.Marshal(req)
+	if err != nil {
+		return "", err
+	}
+
+	request, err := http.NewRequest("POST", "https://api.openai.com/v1/chat/completions", bytes.NewBuffer(reqJson))
+	if err != nil {
+		return "", err
+	}
+
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Authorization", "Bearer API_KEY")
 }
